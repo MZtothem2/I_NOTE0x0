@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="13"
+    android:padding="16dp"
+    >
+
+    <Spinner
+        android:id="@+id/spinner_kids_plist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:spinnerMode="dropdown"
+        android:visibility="visible"></Spinner>
+
+    <Button
+        android:id="@+id/btn_towrite_p"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="알림장 쓰기"
+        android:textSize="16sp"
+        android:textColor="@color/text_menu"
+        android:layout_marginVertical="8dp"
+        />
+
+    <ListView
+        android:id="@+id/listview_plist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        android:divider="#00000000"
+        android:dividerHeight="4dp"
+        android:layout_marginVertical="8dp"
+        >
+
+    </ListView>
+</LinearLayout>

@@ -29,6 +29,17 @@ public class MTeacher extends Member {
     }
 
 
+    public MTeacher(String mail, String password, String name, int memberGrade, int testBelongingOrznizaion) {
+        this.setId(mail);
+        this.setPassword(password);
+        this.setName(name);
+        this.setMemberGrade(memberGrade);
+        this.isWorking = G.IS_WORKING;
+        //todo: testBelongingOrznizaion으로 DB에서 해당기관 자료 찾기
+        setmIdentifyCode("test", testBelongingOrznizaion);
+        setIsApproved(G.IS_APPROVED);
+    }
+
     public int getIsWorking() {
         return isWorking;
     }

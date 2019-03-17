@@ -57,7 +57,23 @@ public class MParent extends Member {
 
     }
 
+    public int addChildrenCode(int childCode) {
+        if (this.childrenCode.contains(childrenCode)) return G.FAIL;
+        else {
+            this.childrenCode += childCode+";";
+            splitChildrenCodes();
+            return G.SUCCESS;
+        }
+    }
 
+    public int deleteChildrenCode(int childcode) {
+        if (!this.childrenCode.contains(childcode+"")) return G.FAIL;
+        else {
+            this.childrenCode.replaceAll(childcode+"", "");
+            splitChildrenCodes();
+            return G.SUCCESS;
+        }
+    }
 
 
     public String getChildrenCode() {

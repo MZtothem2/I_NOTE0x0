@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_00leaf"
+            android:layout_marginBottom="4dp"
+            />
+        <EditText
+            android:id="@+id/et_id_login"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:hint="e-mail 주소 (aaa@email.com)"
+            android:textSize="16sp"
+            android:inputType="text"
+            />
+        <EditText
+            android:id="@+id/et_pw_login"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호"
+            android:textSize="16sp"
+            android:inputType="textPassword"/>
+        <Button
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:textColor="@color/text_menu"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_marginTop="4dp"
+            android:onClick="clickLogin"
+            />
+
+        <RelativeLayout
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/btn_signup"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="@string/btn_signup"
+                android:clickable="true"
+                android:layout_centerInParent="true"
+                android:onClick="clickSignup"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:paddingHorizontal="28dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="3"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/btn_trial_director"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="원장 체험"
+                android:gravity="center"
+                android:clickable="true"
+                android:onClick="clickTrial"/>
+
+            <TextView
+                android:id="@+id/btn_trial_teacher"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="교사 체험"
+                android:gravity="center"
+                android:clickable="true"
+                android:onClick="clickTrial"/>
+
+            <TextView
+                android:id="@+id/btn_trial_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="학부모 체험"
+                android:gravity="center"
+                android:clickable="true"
+                android:onClick="clickTrial"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="88dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp"
+    android:layout_marginVertical="4dp"
+    android:background="@drawable/border_view"
+    android:layout_margin="2dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:gravity="center"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="8dp"
+            >
+
+            <TextView
+                android:id="@+id/tnotelist_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="신짱구"
+                android:textColor="@color/text_deep"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/tnotelist_item_class"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="해바라기반"
+                android:textColor="@color/text_deep"
+                android:layout_below="@id/tnotelist_item_name"
+                android:textSize="12sp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="match_parent"
+            android:layout_marginRight="12dp"
+            >
+
+
+            <TextView
+                android:id="@+id/tv_tnote_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019년 2월 21일 목요일 알림장"
+                android:textSize="12sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/text_deep"
+                android:layout_marginLeft="32dp"/>
+
+
+
+            <TextView
+                android:id="@+id/tnotelist_item_content"
+                android:layout_width="285dp"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="울퉁불퉁 멋진 몸매에 빨간 옷을 입고 새콤달콤 향내 풍기는 멋쟁이 토마토 나는야 주스 될거야 (쭈욱) 나는야 케첩 될거야 (찌익) 나는야 춤을 출거야!(헤이!) 뽐내는 토마토(토마토) "
+                android:textSize="12sp"
+                android:layout_marginTop="12dp"
+                />
+
+            <TextView
+                android:id="@+id/tnotelist_item_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2월 21일 목요일"
+                android:textSize="10sp"
+                android:textColor="@color/text_deep"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="12dp"
+                />
+
+            <ImageView
+                android:id="@+id/tnotelist_item_picture"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_photo_g_24dp"
+                android:layout_toLeftOf="@id/tnotelist_item_date"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                />
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

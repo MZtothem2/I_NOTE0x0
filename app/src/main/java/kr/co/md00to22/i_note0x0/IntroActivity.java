@@ -29,7 +29,7 @@ public class IntroActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
 
-            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+            Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
             startActivity(intent);
 
             //MainActivity 전환 후 IntroActivity 없애기 -> 이 경우 전환 시 애니메이션 줄 수 X. finish에 delay하든지
@@ -37,6 +37,8 @@ public class IntroActivity extends AppCompatActivity {
 
         }
     };
+
+
 
     @Override
     protected void onDestroy() {

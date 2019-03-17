@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="88dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="4dp"
+    android:background="@drawable/border_view"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/note_item_toorgani_content"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="울퉁불퉁 멋진 몸매에 빨간 옷을 입고 새콤달콤 향내풍기는 멋쟁이 토마토 나는야 주스 될거야 (쭈욱) 나는야 케첩 될거야 (찌익) 나는야 춤을 출거야!(헤이!) 뽐내는 토마토(토마토) "
+            android:textSize="14sp"
+            android:paddingHorizontal="8dp"
+            android:layout_alignParentTop="true"
+            />
+
+        <TextView
+            android:id="@+id/note_item_toorgani_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2019년 2월 21일 목요일"
+            android:textSize="12sp"
+            android:textColor="@color/text_deep"
+            android:textStyle="italic"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
