@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#8bc34a</color>
+    <color name="colorPrimaryDark">#5a9216</color>
+    <color name="colorAccent">#f9a825</color>
+    <color name="navi_header">#dcedc8</color>
+
+    <color name="text_menu">#FFFFFFFF</color>
+    <color name="text_contents">#DDDDDD</color>
+    <color name="text_deep">#FF333333</color>
+
+    <color name="option_back">#DDDDDD</color>
+    <color name="option_line">#BBBBBB</color>
+
+
+    <color name="note_name">#666666</color>
+</resources>

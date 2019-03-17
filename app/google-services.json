@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "1052547264597",
+    "firebase_url": "https://inoteapp-c7cd9.firebaseio.com",
+    "project_id": "inoteapp-c7cd9",
+    "storage_bucket": "inoteapp-c7cd9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052547264597:android:47b4c57c99855c0c",
+        "android_client_info": {
+          "package_name": "kr.co.md00to22.i_note0x0"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052547264597-uihc3ngb8k366ie2ou3ksfb6egsin7ke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABNhkkFSLgyV2IMG2kxGmHMjx9k4Pwco4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052547264597:android:baa0a5dce783cb0a",
+        "android_client_info": {
+          "package_name": "kr.co.md00to22.inote00"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052547264597-uihc3ngb8k366ie2ou3ksfb6egsin7ke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABNhkkFSLgyV2IMG2kxGmHMjx9k4Pwco4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
