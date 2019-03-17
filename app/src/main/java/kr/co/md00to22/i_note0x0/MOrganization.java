@@ -29,19 +29,6 @@ public class MOrganization {
         return organization_code;
     }
 
-    public void setOrganization_code(int index) {
-//        //79(O)+연월일+DB인덱스
-//        SimpleDateFormat sdf=new SimpleDateFormat("yyMMdd");
-//        String s="79"+sdf.format(new Date())+index;
-//        this.organization_code = Long.parseLong(s);
-//
-////        this.organization_code=index;
-    }
-
-    public void setOrganization_code(String test, int testCode) {
-        this.organization_code = testCode;
-    }
-
     public String getName() {
         return name;
     }

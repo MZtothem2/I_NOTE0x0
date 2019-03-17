@@ -7,6 +7,11 @@
 
     <string name="navi_string">menu</string>
 
+
+    <string name="btn_signup"><u>회원가입</u></string>
+    <string name="btn_findpw"><u>비밀번호 찾기</u></string>
+    <string name="btn_trial"><u>체험하기</u></string>
+
     <string name="spinner_class_prompt">반</string>
     <string name="spinner_childname_prompt">이름</string>
 

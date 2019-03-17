@@ -56,7 +56,29 @@ public class VNote_Teacher implements Serializable {
     }
 
 
+    public int deletePhoto(int photoIndex) {
+        if (photoIndex>photoArray.size()-1) return G.FAIL;
 
+        photoArray.remove(photoIndex);
+
+        photoUrls="";
+        for(int i=0; i<photoArray.size(); i++){
+            photoUrls=photoArray.get(i)+";";
+        }
+        return G.SUCCESS;
+    }
+
+    public int deletePhoto(String photoUrl) {
+        if (!photoArray.contains(photoUrl)) return G.FAIL;
+
+        photoArray.remove(photoUrl);
+
+        photoUrls="";
+        for(int i=0; i<photoArray.size(); i++){
+            photoUrls=photoArray.get(i)+";";
+        }
+        return G.SUCCESS;
+    }
 
     public String getWriteDate() {
         return writeDate;
