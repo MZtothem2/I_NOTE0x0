@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
 
         loginUrl="http://mdmn1.dothome.co.kr/INOTE/loginDB.php";
 
-        G.structNotes("19_3_14");
     }
 
 
@@ -88,25 +87,21 @@ public class LoginActivity extends AppCompatActivity {
         switch (view.getId()){
             case R.id.btn_trial_director:
                 insertId="director@aaa.com";
-                insertPw="test";
-                loginRequest();
                 break;
 
             case R.id.btn_trial_teacher:
                 insertId="csungA@aaa.com";
-                insertPw="test";
-                loginRequest();
                 break;
 
             case R.id.btn_trial_parent:
                 insertId="testP@aaa.com";
-                insertPw="test";
-                loginRequest();
+
                 break;
         }
-
-        isRun_login=true;
+        insertPw="test";
         loginRequest();
+        isRun_login=true;
+
 
     }//clickTrial
 
@@ -246,7 +241,8 @@ public class LoginActivity extends AppCompatActivity {
 
                             //전체아동
                             JSONArray childrenArray = jsonObject.getJSONArray("tchildren");
-                            if (G.getAllChildren() == null) G.setAllChildren(new ArrayList<MChild>());
+                            Toast.makeText(LoginActivity.this, "children size : "+ childrenArray.length()
+                                    , Toast.LENGTH_SHORT).show();
 
                             for (int i = 0; i < childrenArray.length(); i++) {
                                 String name = childrenArray.getJSONObject(i).getString("name");
@@ -261,8 +257,11 @@ public class LoginActivity extends AppCompatActivity {
 
                                 G.getAllChildren().add(k);
                             }
-                            //G.calClassNKidsArrays();
 
+                            Toast.makeText(LoginActivity.this, "children size2 : "+ childrenArray.length()
+                                    , Toast.LENGTH_SHORT).show();
+
+                            //G.calClassNKidsArrays();
                             G.setDataLoaded(true);
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
 

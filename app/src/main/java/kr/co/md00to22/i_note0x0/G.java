@@ -78,8 +78,6 @@ public class  G {
 
 
     public static void setLoginID(MTeacher loginID) {
-
-
         setLogin_MEMBER_Grade(loginID.getMemberGrade());
 
         if (Login_MEMBER_Grade==MEMBER_GRADE_DIRECTOR) setLoginDirector(loginID);
