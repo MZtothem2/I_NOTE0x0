@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,6 +29,12 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,14 +48,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NoteActivity extends AppCompatActivity {
 
-    private final static int TEACHER_GET_NOTES=10;
-    private final static int PARENT_GET_NOTES=20;
-    private final static int COMPLTE_DOWNLOAD=500;
-    private final static int TEACHER_GET_TNOTE=11;
-    private final static int TEACHER_GET_PNOTE=12;
-    private final static int PARENT_GET_TNOTE=21;
-    private final static int PARENT_GET_PNOTE=22;
-    private final static int STRUCTURE_NOTES=30;
 
     //기본 구조
     Toolbar toolbar;
@@ -69,31 +68,6 @@ public class NoteActivity extends AppCompatActivity {
     ArrayList<VNote_Teacher> teacherNotes=new ArrayList<>();
     ArrayList<VOnedayNote> onedayNotes=new ArrayList<>();
 
-    Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case TEACHER_GET_NOTES:
-                    tdownloadTNotes();
-
-                    break;
-
-                case PARENT_GET_NOTES:
-
-                    break;
-
-                case STRUCTURE_NOTES:
-                    // structNotes();
-                    break;
-
-                case COMPLTE_DOWNLOAD:
-                    drawGradeFragment();
-                    break;
-
-            }
-
-        }
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,13 +82,12 @@ public class NoteActivity extends AppCompatActivity {
         fragtransaction=fragmanager.beginTransaction();
 
         if (G.getLoginDirector()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_DIRECTOR){
-            handler.sendEmptyMessage(TEACHER_GET_NOTES);
+
 
         }else if(G.getLoginTeacher()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_TEACHER){
-            handler.sendEmptyMessage(TEACHER_GET_NOTES);
+
 
         }else if (G.getLoginParent()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_PARENT){
-            handler.sendEmptyMessage(PARENT_GET_NOTES);
 
             NoteListPFragment noteListPfragment= new NoteListPFragment();
             fragtransaction.add(R.id.note_container,noteListPfragment);
@@ -125,6 +98,25 @@ public class NoteActivity extends AppCompatActivity {
         }
 
     }//onCreate
+
+
+    void teacherGetNotesFromFirebase(){
+        FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
+        DatabaseReference rootRef=firebaseDatabase.getReference();
+        DatabaseReference orgNoteRef=rootRef.child("INOTE").child(G.getLoginOrganization().getOrganization_code()+"");
+
+        orgNoteRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //dataSnapshot.getValue()
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     void structNotes(){
         //교사가 작성한 알림장 날짜 기준으로 VOnedayNote 생성
@@ -222,6 +214,8 @@ public class NoteActivity extends AppCompatActivity {
 
 
             }
+
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -276,7 +270,6 @@ public class NoteActivity extends AppCompatActivity {
 
 
                     tdownloadPNotes();
-                    handler.sendEmptyMessage(COMPLTE_DOWNLOAD);
                 } catch (JSONException e) {
                     makeErrorMessage(e.getMessage(), null);
                 }

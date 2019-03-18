@@ -175,7 +175,7 @@ public class NoteWriteTFragment extends Fragment {
 
         noteContents=etCotnent.getText().toString();
         //todo : 사진파일첨부, 낮잠시간
-        VNote_Teacher tnote=new VNote_Teacher("dateOftody", writeChecks, napTIme, noteContents, photoUrls, selecctChildCode, G.getLoginOrganization().getOrganization_code());
+        VNote_Teacher tnote=new VNote_Teacher(dateOftody, writeChecks, napTIme, noteContents, photoUrls, selecctChildCode, G.getLoginOrganization().getOrganization_code());
 
 
         FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
