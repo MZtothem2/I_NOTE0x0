@@ -42,11 +42,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NoteActivity extends AppCompatActivity {
+
+    TextView tvtestP, tvtestT;
 
 
     //기본 구조
@@ -66,36 +70,71 @@ public class NoteActivity extends AppCompatActivity {
 
     ArrayList<VNote_Parent> parentNotes=new ArrayList<>();
     ArrayList<VNote_Teacher> teacherNotes=new ArrayList<>();
-    ArrayList<VOnedayNote> onedayNotes=new ArrayList<>();
+    ArrayList<VOnedayNote> allNotes=new ArrayList<>();
+
+    private final int tGetTnotes=11;
+    private final int tGetPnotes=12;
+
+    private final int pGetTnotes=15;
+    private final int pGetPnotes=16;
+
+    private final int tmakeOnedayNote=20;
+    private final int pmakeOnedayNote=21;
+
+    private final int noteComplete=30;
+
+
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case tGetTnotes:
+                    tdownloadTNotes();
+                    break;
+                case tGetPnotes:
+                    tdownloadPNotes();
+                    break;
+                case tmakeOnedayNote:
+                    tStructNotes();
+                    tvtestP.setText(allNotes.size()+"개 / ");
+                    break;
+
+
+                case pGetTnotes:
+                    break;
+
+                case pGetPnotes:
+                    break;
+
+                case pmakeOnedayNote:
+                    pStructNotes();
+                    break;
+
+                case noteComplete:
+                    dfSettings(R.string.activity_name_note);
+                    //drawGradeFragment();
+
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-        if (!G.getIsLogined()) return;
+
+        //TEST
+        tvtestP=findViewById(R.id.tv_testp);
+        tvtestT=findViewById(R.id.tv_testt);
 
 
-        dfSettings(R.string.activity_name_note);
-
-
-        fragmanager=getSupportFragmentManager();
-        fragtransaction=fragmanager.beginTransaction();
-
-        if (G.getLoginDirector()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_DIRECTOR){
-
-
-        }else if(G.getLoginTeacher()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_TEACHER){
-
-
-        }else if (G.getLoginParent()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_PARENT){
-
-            NoteListPFragment noteListPfragment= new NoteListPFragment();
-            fragtransaction.add(R.id.note_container,noteListPfragment);
-
-        }else{
+        if(!G.getIsLogined() && G.getLoginDirector()==null && G.getLoginParent()==null && G.getLoginTeacher()==null){
             Toast.makeText(this, "로그인 오류", Toast.LENGTH_SHORT).show();
             finish();
         }
+
+        else if (G.getLoginTeacher()!=null || G.getLoginDirector()!=null)  handler.sendEmptyMessage(tGetTnotes);
+        else if (G.getLoginParent()!=null) handler.sendEmptyMessage(pGetTnotes);
 
     }//onCreate
 
@@ -118,8 +157,7 @@ public class NoteActivity extends AppCompatActivity {
         });
     }
 
-    void structNotes(){
-        //교사가 작성한 알림장 날짜 기준으로 VOnedayNote 생성
+    void pStructNotes(){
         if (teacherNotes.size()==0){
             new AlertDialog.Builder(this).setMessage("알림장 오류").setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 @Override
@@ -129,18 +167,87 @@ public class NoteActivity extends AppCompatActivity {
             }).show();
             return;
         }
-        HashMap<String, VOnedayNote> notes=new HashMap<>();
-        for (int i=0; i<teacherNotes.size(); i++){
-            String mapKey=G.calDateData(teacherNotes.get(i).getWriteDate(), "_d");
-            VOnedayNote mapValueOnedayNote=new VOnedayNote();
 
-            mapValueOnedayNote.setWriteDate(mapKey);
-           // mapValueOnedayNote.setChildCode();
+        if (G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_PARENT) {
+            //부모의 알림장 받기 : 한 아이에 대한 알림장 정리하기
+            //교사가 작성한 알림장 날짜 기준으로 VOnedayNote 생성 ->tnote 삽입
+            HashMap<String, VOnedayNote> mapNotes = new HashMap<>();
+            for (int i = 0; i < teacherNotes.size(); i++) {
+                String mapKey = G.calDateData(teacherNotes.get(i).getWriteDate(), "_d");
+                VOnedayNote mapOnedayNote = new VOnedayNote();
+
+                mapOnedayNote.setNoteTeacher(teacherNotes.get(i));
+                mapOnedayNote.setWriteDate(teacherNotes.get(i).getWriteDate());
+                mapOnedayNote.setChildCode(teacherNotes.get(i).getChildCode());
+                //mapOnedayNote.setClassCode( );
+
+                mapNotes.put(mapKey, mapOnedayNote);
+            }
+
+            //날짜를 기준으로 Pntoe삽입
+            for (int k = 0; k < parentNotes.size(); k++) {
+                String date = G.calDateData(parentNotes.get(k).getWriteDate(), "_d");
+
+                if (mapNotes.get(date) != null) {
+                    //해당날짜의 교사알림장이 있다면 추가
+                    mapNotes.get(date).setNoteParent(parentNotes.get(k));
+                } else {
+                    //해당날짜의 교사 알림장이 없다면 : 만들어서 추가!
+                    VOnedayNote onedayNote = new VOnedayNote();
+                    onedayNote.setNoteParent(parentNotes.get(k));
+                    onedayNote.setWriteDate(parentNotes.get(k).getWriteDate());
+
+                }
+            }
+            //HashMap의 키값을 기준으로 오름차순 ArrayList
+
+            TreeMap<String, VOnedayNote> tm=new TreeMap<>(mapNotes);
+            Iterator<String> iteratorKey=tm.keySet().iterator();
+
+            while (iteratorKey.hasNext()){
+                String key=iteratorKey.next();
+                allNotes.add(0, mapNotes.get(key));
+            }
 
         }
     }
 
+    void tStructNotes() {
+        if (G.getLogin_MEMBER_Grade() != G.MEMBER_GRADE_TEACHER) return;
+        //1. 같은 날짜의 알림장들 모으기
+        ArrayList<VOnedayNote> allnotes=new ArrayList<>();
 
+        Map<String, VOnedayNote[]> dateN=new HashMap<>();
+
+        String keyDate="";
+        VNote_Teacher tnote;
+        VNote_Parent pnote;
+        VOnedayNote ondayNote;
+
+        for (int t=0; t<teacherNotes.size() ; t++){
+            keyDate=G.calDateData(teacherNotes.get(t).getWriteDate(), "_d");
+
+            if (!keyDate.equals("")){
+                dateN.put(keyDate, null);
+
+                //같은날짜의 알림장 모으기
+                for(int k=t; k<teacherNotes.size(); k++){
+                   String dateB=G.calDateData(teacherNotes.get(t).getWriteDate(), "_d");
+
+                   if (keyDate.equals(dateB)){
+                       tnote=teacherNotes.get(t);
+                   }
+                }
+            }
+
+        }
+
+
+
+
+
+
+    }
     void drawGradeFragment(){
         //fragment;
 
@@ -160,9 +267,6 @@ public class NoteActivity extends AppCompatActivity {
             NoteListPFragment noteListPfragment= new NoteListPFragment();
             fragtransaction.add(R.id.note_container,noteListPfragment);
 
-        }else{
-            Toast.makeText(this, "로그인 오류", Toast.LENGTH_SHORT).show();
-            finish();
         }
         fragtransaction.commit();
     }
@@ -171,6 +275,7 @@ public class NoteActivity extends AppCompatActivity {
         StringRequest stringRequest=new StringRequest(StringRequest.Method.POST, tNotePUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                StringBuffer bufferP=new StringBuffer();
 
                 try{
                     //부모가 쓴 알림장
@@ -204,10 +309,12 @@ public class NoteActivity extends AppCompatActivity {
                         VNote_Parent pn=new VNote_Parent(writeDate, checks, gohomeAdult, gohomeTime, note, photoUrl, childCode);
                         parentNotes.add(0,pn);
 
+                        bufferP.append(pn.getWriteDate() + "/" + note + "\n");
                     }
                     //Log.i("pnote size", parentNotes.size()+"");
-
-
+                    bufferP.append("부모 알림장 총 개수 : "+ parentNotes.size());
+                        tvtestP.setText(bufferP.toString());
+                    handler.sendEmptyMessage(tmakeOnedayNote);
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -238,6 +345,7 @@ public class NoteActivity extends AppCompatActivity {
         StringRequest stringRequest=new StringRequest(StringRequest.Method.POST, tNoteTUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                StringBuffer buffer=new StringBuffer();
                 try {
                     JSONObject jsonObject=new JSONObject(response);
                     //교사가 쓴 알림장
@@ -252,7 +360,7 @@ public class NoteActivity extends AppCompatActivity {
                         String photoUrl=tnObj.getString("photoUrls");
                         int childCode=tnObj.getInt("childCode");
                         int organizationCode=tnObj.getInt("organization_code");
-
+                        int classCode=tnObj.getInt("classCode");
                         String c=tnObj.getString("check_rbs");
                         int[] checks=null;
                         if (c.contains(";")){
@@ -263,13 +371,15 @@ public class NoteActivity extends AppCompatActivity {
                             }
                         }
 
-                        VNote_Teacher tn=new VNote_Teacher(writeDate, checks, napTime, note, photoUrl, childCode, organizationCode);
+                        VNote_Teacher tn=new VNote_Teacher(writeDate, checks, napTime, note, photoUrl, childCode, organizationCode, classCode);
                         teacherNotes.add(0,tn);
 
+                        buffer.append(tn.getWriteDate()+" / "+ note + "\n");
                     }
+                    buffer.append("교사알림장 총 개수 : "+teacherNotes.size() );
+                    tvtestT.setText(buffer.toString());
 
-
-                    tdownloadPNotes();
+                    handler.sendEmptyMessage(tGetPnotes);
                 } catch (JSONException e) {
                     makeErrorMessage(e.getMessage(), null);
                 }

@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class VOnedayNote implements Serializable {
-    VNote_Parent noteParent;
-    VNote_Teacher noteTeacher;
+    private VNote_Parent noteParent;
+    private VNote_Teacher noteTeacher;
     private int childCode;
     private int classCode;
     private String writeDate;

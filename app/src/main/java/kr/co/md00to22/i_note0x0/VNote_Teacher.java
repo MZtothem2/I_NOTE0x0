@@ -14,19 +14,20 @@ public class VNote_Teacher implements Serializable {
     private String photoUrls;
     private ArrayList<String> photoArray;
 
-    int childCode;
-    int organizationCode;
+    private int childCode;
+    private int classCode;
+    private int organizationCode;
 
     public VNote_Teacher() {
     }
 
-    public VNote_Teacher(String writeDate, int[] check_rbs, String napTime, String note, String photoUrl, int childCode, int organizationCode) {
+    public VNote_Teacher(String writeDate, int[] check_rbs, String napTime, String note, String photoUrl, int childCode, int organizationCode, int classCode) {
         this.writeDate = writeDate;
         this.napTime = napTime;
         this.note = note;
         this.childCode=childCode;
         this.organizationCode=organizationCode;
-
+        this.classCode=classCode;
 
         this.checks=new ArrayList<>();
         for (int i=0; i<check_rbs.length ; i++){
@@ -143,5 +144,13 @@ public class VNote_Teacher implements Serializable {
 
     public void setOrganizationCode(int organizationCode) {
         this.organizationCode = organizationCode;
+    }
+
+    public int getClassCode() {
+        return classCode;
+    }
+
+    public void setClassCode(int classCode) {
+        this.classCode = classCode;
     }
 }

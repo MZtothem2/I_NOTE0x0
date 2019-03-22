@@ -42,7 +42,8 @@ public class NoteWriteTFragment extends Fragment {
 
     //보낼값
     String dateOftody="";
-    int selecctChildCode=-1;
+    int selectClassCode;
+    int selectChildCode=-1;
     int[] writeChecks=new int[3];
     String noteContents="";
     String photoUrls="";
@@ -118,12 +119,13 @@ public class NoteWriteTFragment extends Fragment {
                 if (parent.getSelectedItemPosition()==0){
                     //'전체'선택 시
                     childrenNamesInClass.clear();
-                    selecctChildCode=-1;
+                    selectChildCode=-1;
                 }else{
                     //반 선택 시
                     //반별 아동 리스트 만들기
                     for(int i=0; i<G.getAllChildren().size(); i++){
                         if (G.getAllChildren().get(i).getClasscode()==G.getClassCodes().get(position)){
+                            selectClassCode=G.getClassCodes().get(position);
                             childrenCodesInClass.add(G.getAllChildren().get(i).getChildCode());
                             childrenNamesInClass.add(G.getAllChildren().get(i).getName());
                         }
@@ -146,8 +148,8 @@ public class NoteWriteTFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position>0) {
-                    selecctChildCode= childrenCodesInClass.get(position);
-                    Toast.makeText(getContext(), selecctChildCode+"", Toast.LENGTH_SHORT).show();
+                    selectChildCode= childrenCodesInClass.get(position);
+                    Toast.makeText(getContext(), selectChildCode+"", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -163,7 +165,7 @@ public class NoteWriteTFragment extends Fragment {
     void submitNote(){
         String dateOftody=G.getTodayDate().get("_s");
 
-        if (selecctChildCode==-1){
+        if (selectChildCode==-1){
             new AlertDialog.Builder(getContext()).setMessage("어린이를 선택하세요").setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -175,12 +177,12 @@ public class NoteWriteTFragment extends Fragment {
 
         noteContents=etCotnent.getText().toString();
         //todo : 사진파일첨부, 낮잠시간
-        VNote_Teacher tnote=new VNote_Teacher(dateOftody, writeChecks, napTIme, noteContents, photoUrls, selecctChildCode, G.getLoginOrganization().getOrganization_code());
+        VNote_Teacher tnote=new VNote_Teacher(dateOftody, writeChecks, napTIme, noteContents, photoUrls, selectChildCode, G.getLoginOrganization().getOrganization_code(),selectClassCode);
 
 
         FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
         DatabaseReference rootReference=firebaseDatabase.getReference();//최상위노드
-        DatabaseReference todayChildRef=rootReference.child("INOTE").child(""+G.getLoginOrganization().getOrganization_code()).child("19_03_14").child(selecctChildCode+"");
+        DatabaseReference todayChildRef=rootReference.child("INOTE").child(""+G.getLoginOrganization().getOrganization_code()).child("19_03_14").child(selectChildCode+"");
 
         DatabaseReference tnoteRef= todayChildRef.child("tnote");
         tnoteRef.setValue(tnote);
