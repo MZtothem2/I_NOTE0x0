@@ -50,7 +50,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NoteActivity extends AppCompatActivity {
 
-    TextView tvtestP, tvtestT;
+    TextView tvtestP, tvtestT, tvtest1;
 
 
     //기본 구조
@@ -96,7 +96,7 @@ public class NoteActivity extends AppCompatActivity {
                     break;
                 case tmakeOnedayNote:
                     tStructNotes();
-                    tvtestP.setText(allNotes.size()+"개 / ");
+                    tvtest1.setText(allNotes.size()+"개 / ");
                     break;
 
 
@@ -126,6 +126,8 @@ public class NoteActivity extends AppCompatActivity {
         //TEST
         tvtestP=findViewById(R.id.tv_testp);
         tvtestT=findViewById(R.id.tv_testt);
+        tvtest1=findViewById(R.id.tv_test);
+
 
 
         if(!G.getIsLogined() && G.getLoginDirector()==null && G.getLoginParent()==null && G.getLoginTeacher()==null){
@@ -214,36 +216,45 @@ public class NoteActivity extends AppCompatActivity {
 
     void tStructNotes() {
         if (G.getLogin_MEMBER_Grade() != G.MEMBER_GRADE_TEACHER) return;
-        //1. 같은 날짜의 알림장들 모으기
-        ArrayList<VOnedayNote> allnotes=new ArrayList<>();
 
-        Map<String, VOnedayNote[]> dateN=new HashMap<>();
+        for (int i=0; i<teacherNotes.size(); i++){
+            VOnedayNote oned=new VOnedayNote();
+            oned.setNoteTeacher(teacherNotes.get(i));
+            oned.setWriteDate( G.calDateData(teacherNotes.get(i).getWriteDate(), "_d"));
+            oned.setChildCode(teacherNotes.get(i).getChildCode());
+            oned.setClassCode(teacherNotes.get(i).getClassCode());
 
-        String keyDate="";
-        VNote_Teacher tnote;
-        VNote_Parent pnote;
-        VOnedayNote ondayNote;
+            String noteDate=teacherNotes.get(i).getWriteDate();
+            int noteCcode=teacherNotes.get(i).getChildCode();
 
-        for (int t=0; t<teacherNotes.size() ; t++){
-            keyDate=G.calDateData(teacherNotes.get(t).getWriteDate(), "_d");
 
-            if (!keyDate.equals("")){
-                dateN.put(keyDate, null);
-
-                //같은날짜의 알림장 모으기
-                for(int k=t; k<teacherNotes.size(); k++){
-                   String dateB=G.calDateData(teacherNotes.get(t).getWriteDate(), "_d");
-
-                   if (keyDate.equals(dateB)){
-                       tnote=teacherNotes.get(t);
-                   }
+            for (int k=0; k<parentNotes.size(); k++){
+                if (parentNotes.get(k).getWriteDate().equals(noteDate) && parentNotes.get(k).getChildCode()==noteCcode){
+                    oned.setNoteParent( parentNotes.get(k) );
+                    parentNotes.remove(k);
                 }
             }
 
+            allNotes.add(oned);
         }
 
 
+        //날짜, 아동코드 일치하는 OnedayNote에 Pnote삽입
 
+        //부모만 작성한 알림장
+        if (parentNotes.size()!=0){
+            for (int p=0; p<parentNotes.size(); p++){
+                String date= G.calDateData(parentNotes.get(p).getWriteDate(), "_d");
+                int ccode=parentNotes.get(p).getChildCode();
+
+                VOnedayNote pwrite=new VOnedayNote();
+                pwrite.setNoteParent( parentNotes.get(p) );
+                pwrite.setChildCode( parentNotes.get(p).getChildCode() );
+                pwrite.setClassCode( parentNotes.get(p). getClassCode() );
+
+
+            }
+        }
 
 
 
@@ -427,6 +438,7 @@ public class NoteActivity extends AppCompatActivity {
 
         G.setNotesLoaded(false);
     }
+
 
     void dfSettings(int nameOfActivity) {
 

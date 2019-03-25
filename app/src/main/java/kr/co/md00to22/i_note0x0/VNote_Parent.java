@@ -18,6 +18,7 @@ public class VNote_Parent implements Serializable {
     private ArrayList<String> photoArray;
 
     private int childCode;
+    private int classCode;
 
     public VNote_Parent() {
     }
@@ -121,5 +122,13 @@ public class VNote_Parent implements Serializable {
 
     public void setChildCode(int childCode) {
         this.childCode = childCode;
+    }
+
+    public int getClassCode() {
+        return classCode;
+    }
+
+    public void setClassCode(int classCode) {
+        this.classCode = classCode;
     }
 }

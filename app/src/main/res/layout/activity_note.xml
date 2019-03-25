@@ -37,18 +37,24 @@
         </android.support.v7.widget.Toolbar>
 
         <TextView
-            android:id="@+id/tv_testp"
+            android:id="@+id/tv_test"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="#CCCCCC"/>
+        <TextView
+            android:id="@+id/tv_testp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#FFEEFF"/>
         <TextView
             android:id="@+id/tv_testt"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="#FFEEEE"/>
-        Fragment
+
         <RelativeLayout
             android:visibility="gone"
             android:id="@+id/note_container"
