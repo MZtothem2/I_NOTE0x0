@@ -1,9 +1,10 @@
 package kr.co.md00to22.i_note0x0;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 @SuppressWarnings("serial")
-public class VOnedayNote implements Serializable {
+public class VOnedayNote implements Serializable , Comparable<VOnedayNote> {
     private VNote_Parent noteParent;
     private VNote_Teacher noteTeacher;
     private int childCode;
@@ -19,6 +20,11 @@ public class VOnedayNote implements Serializable {
         this.childCode = childCode;
         this.classCode=classCode;
         this.writeDate=writeDate;
+    }
+
+    @Override
+    public int compareTo(VOnedayNote o) {
+        return 0;
     }
 
     public int getChildCode() {
