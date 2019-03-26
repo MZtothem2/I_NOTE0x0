@@ -41,6 +41,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -96,7 +99,6 @@ public class NoteActivity extends AppCompatActivity {
                     break;
                 case tmakeOnedayNote:
                     tStructNotes();
-                    tvtest1.setText(allNotes.size()+"개 / ");
                     break;
 
 
@@ -112,6 +114,7 @@ public class NoteActivity extends AppCompatActivity {
 
                 case noteComplete:
                     dfSettings(R.string.activity_name_note);
+                    drawGradeFragment();
                     //drawGradeFragment();
 
             }
@@ -121,12 +124,13 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_note);
 
-        //TEST
-        tvtestP=findViewById(R.id.tv_testp);
-        tvtestT=findViewById(R.id.tv_testt);
-        tvtest1=findViewById(R.id.tv_test);
+//        //TEST
+//        tvtestP=findViewById(R.id.tv_testp);
+//        tvtestT=findViewById(R.id.tv_testt);
+//        tvtest1=findViewById(R.id.tv_test);
 
 
 
@@ -135,8 +139,13 @@ public class NoteActivity extends AppCompatActivity {
             finish();
         }
 
-        else if (G.getLoginTeacher()!=null || G.getLoginDirector()!=null)  handler.sendEmptyMessage(tGetTnotes);
-        else if (G.getLoginParent()!=null) handler.sendEmptyMessage(pGetTnotes);
+//
+//        else if (G.getLoginTeacher()!=null || G.getLoginDirector()!=null)  handler.sendEmptyMessage(tGetTnotes);
+//        else if (G.getLoginParent()!=null) handler.sendEmptyMessage(pGetTnotes);
+
+
+        dfSettings(R.string.activity_name_note);
+        drawGradeFragment();
 
     }//onCreate
 
@@ -179,7 +188,7 @@ public class NoteActivity extends AppCompatActivity {
                 VOnedayNote mapOnedayNote = new VOnedayNote();
 
                 mapOnedayNote.setNoteTeacher(teacherNotes.get(i));
-                mapOnedayNote.setWriteDate(teacherNotes.get(i).getWriteDate());
+                mapOnedayNote.setWriteDate(G.calDateData(teacherNotes.get(i).getWriteDate(),"_d"));
                 mapOnedayNote.setChildCode(teacherNotes.get(i).getChildCode());
                 //mapOnedayNote.setClassCode( );
 
@@ -197,7 +206,7 @@ public class NoteActivity extends AppCompatActivity {
                     //해당날짜의 교사 알림장이 없다면 : 만들어서 추가!
                     VOnedayNote onedayNote = new VOnedayNote();
                     onedayNote.setNoteParent(parentNotes.get(k));
-                    onedayNote.setWriteDate(parentNotes.get(k).getWriteDate());
+                    onedayNote.setWriteDate(G.calDateData(parentNotes.get(k).getWriteDate(), "_d"));
 
                 }
             }
@@ -238,6 +247,7 @@ public class NoteActivity extends AppCompatActivity {
             allNotes.add(oned);
         }
 
+        Collections.sort(allNotes, new NoteCompare());
 
         //날짜, 아동코드 일치하는 OnedayNote에 Pnote삽입
 
@@ -245,7 +255,7 @@ public class NoteActivity extends AppCompatActivity {
         if (parentNotes.size()!=0){
             for (int p=0; p<parentNotes.size(); p++){
                 String date= G.calDateData(parentNotes.get(p).getWriteDate(), "_d");
-                int ccode=parentNotes.get(p).getChildCode();
+                int code=parentNotes.get(p).getChildCode();
 
                 VOnedayNote pwrite=new VOnedayNote();
                 pwrite.setNoteParent( parentNotes.get(p) );
@@ -253,25 +263,38 @@ public class NoteActivity extends AppCompatActivity {
                 pwrite.setClassCode( parentNotes.get(p). getClassCode() );
 
 
+                for (int n=0; n<allNotes.size(); n++){
+                    String cpdate=G.calDateData(allNotes.get(n).getWriteDate(), "_d");
+                    int cpcode=allNotes.get(n).getChildCode();
+                    if (date.compareTo( cpdate )==0){
+                        if ( code<cpcode ) allNotes.add(n, pwrite);
+                    }
+                }
             }
+
+
         }
-
-
+        Collections.sort(allNotes, new NoteCompare());
+        handler.sendEmptyMessage(noteComplete);
 
     }
     void drawGradeFragment(){
         //fragment;
 
+        G.setAllNotes(allNotes);
 
-        if (G.getLoginDirector()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_DIRECTOR){
+        fragtransaction=getSupportFragmentManager().beginTransaction();
+//
+//        Bundle bundle=new Bundle();
+//        bundle.putParcelableArrayList("allnotes", allNotes);
+
+
+        if ( (G.getLoginDirector()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_DIRECTOR)
+                || (G.getLoginTeacher()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_TEACHER)){
             Toast.makeText(this, teacherNotes.size()+""+parentNotes.size(), Toast.LENGTH_SHORT).show();
             NoteListTFragment noteListTFragment=new NoteListTFragment();
             fragtransaction.add(R.id.note_container,noteListTFragment);
 
-        }else if(G.getLoginTeacher()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_TEACHER){
-
-            NoteListTFragment noteListTFragment=new NoteListTFragment();
-            fragtransaction.add(R.id.note_container,noteListTFragment);
 
         }else if (G.getLoginParent()!=null && G.getLogin_MEMBER_Grade()==G.MEMBER_GRADE_PARENT){
 
@@ -279,6 +302,7 @@ public class NoteActivity extends AppCompatActivity {
             fragtransaction.add(R.id.note_container,noteListPfragment);
 
         }
+        fragtransaction.addToBackStack(null);
         fragtransaction.commit();
     }
 
@@ -323,8 +347,8 @@ public class NoteActivity extends AppCompatActivity {
                         bufferP.append(pn.getWriteDate() + "/" + note + "\n");
                     }
                     //Log.i("pnote size", parentNotes.size()+"");
-                    bufferP.append("부모 알림장 총 개수 : "+ parentNotes.size());
-                        tvtestP.setText(bufferP.toString());
+//                    bufferP.append("부모 알림장 총 개수 : "+ parentNotes.size());
+//                        tvtestP.setText(bufferP.toString());
                     handler.sendEmptyMessage(tmakeOnedayNote);
                 }catch (JSONException e) {
                     e.printStackTrace();
@@ -387,8 +411,8 @@ public class NoteActivity extends AppCompatActivity {
 
                         buffer.append(tn.getWriteDate()+" / "+ note + "\n");
                     }
-                    buffer.append("교사알림장 총 개수 : "+teacherNotes.size() );
-                    tvtestT.setText(buffer.toString());
+//                    buffer.append("교사알림장 총 개수 : "+teacherNotes.size() );
+//                    tvtestT.setText(buffer.toString());
 
                     handler.sendEmptyMessage(tGetPnotes);
                 } catch (JSONException e) {
@@ -440,6 +464,36 @@ public class NoteActivity extends AppCompatActivity {
     }
 
 
+    class NoteCompare implements Comparator<VOnedayNote>{
+        //날짜(String), 아동코드(int)순 구분
+        int ret=0;
+        @Override
+        public int compare(VOnedayNote o1, VOnedayNote o2) {
+            String date1=G.calDateData( o1.getWriteDate(), "_d");
+            String date2=G.calDateData( o2.getWriteDate(), "_d");
+
+            int code1=o1.getChildCode();
+            int code2=o2.getChildCode();
+
+            //날짜는 오름차순, 이름은 내림차순
+
+            if(date1.compareTo(date2)<0) ret=-1;
+
+            if (date1.equals(date2)){
+                //날짜가 같다면 아동코드로 구분(내림차순)
+                if ( code1>code2 ) ret=1;
+                else if (code1<code2) ret=-1;
+            }
+
+            if (date1.compareTo(date2)>0) ret=1;
+
+
+            return ret;
+        }
+    }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void dfSettings(int nameOfActivity) {
 
         //초기화

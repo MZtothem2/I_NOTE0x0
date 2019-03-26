@@ -54,6 +54,7 @@ public class  G {
     private static boolean notesLoaded=false;
     private static boolean albumLoaded=false;
 
+    private static ArrayList<VOnedayNote> allNotes=new ArrayList<>();
 
 
     //교사가 사용하는 변수
@@ -491,5 +492,9 @@ public class  G {
 
     public static void setAlbumLoaded(boolean albumLoaded) {
         G.albumLoaded = albumLoaded;
+    }
+
+    public static void setAllNotes(ArrayList<VOnedayNote> allNotes) {
+        G.allNotes = allNotes;
     }
 }

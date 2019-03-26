@@ -1,10 +1,13 @@
 package kr.co.md00to22.i_note0x0;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 @SuppressWarnings("serial")
-public class VNote_Parent implements Serializable {
+public class VNote_Parent implements Serializable, Parcelable {
     private String writeDate;
 
     private ArrayList<Integer> checks;
@@ -58,6 +61,16 @@ public class VNote_Parent implements Serializable {
         splitPhotoUrl();
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 
     public ArrayList<Integer> getChecks() {
         return checks;

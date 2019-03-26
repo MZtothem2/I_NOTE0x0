@@ -1,10 +1,13 @@
 package kr.co.md00to22.i_note0x0;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Comparator;
 
 @SuppressWarnings("serial")
-public class VOnedayNote implements Serializable , Comparable<VOnedayNote> {
+public class VOnedayNote implements Serializable , Parcelable {
     private VNote_Parent noteParent;
     private VNote_Teacher noteTeacher;
     private int childCode;
@@ -23,8 +26,13 @@ public class VOnedayNote implements Serializable , Comparable<VOnedayNote> {
     }
 
     @Override
-    public int compareTo(VOnedayNote o) {
+    public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 
     public int getChildCode() {
