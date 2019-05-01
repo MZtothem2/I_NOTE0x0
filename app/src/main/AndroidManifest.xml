@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.co.md00to22.i_note0x0">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -37,7 +36,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".InfoActivity" />
-        <activity android:name=".DirectorActivity"></activity>
+        <activity android:name=".DirectorActivity" />
+        <activity android:name=".FirebaseUIActivity"></activity>
     </application>
 
 </manifest>
