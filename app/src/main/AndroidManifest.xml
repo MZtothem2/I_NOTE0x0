@@ -26,18 +26,21 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".LoginActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".TestmodeActivity" />
-        <activity android:name=".IntroActivity">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TestmodeActivity" />
+        <activity android:name=".IntroActivity" />
         <activity android:name=".InfoActivity" />
         <activity android:name=".DirectorActivity" />
-        <activity android:name=".FirebaseUIActivity"></activity>
+        <activity android:name=".FirebaseUIActivity" />
+        <activity android:name=".StartActivity" />
+        <activity android:name=".ParentsActivity" />
+        <activity android:name=".TeachersActivity"></activity>
     </application>
 
 </manifest>

@@ -79,7 +79,7 @@ public class  G {
 
 
     public static void setLoginID(MTeacher loginID) {
-        setLogin_MEMBER_Grade(loginID.getMemberGrade());
+        //setLogin_MEMBER_Grade(loginID.getMemberGrade());
 
         if (Login_MEMBER_Grade==MEMBER_GRADE_DIRECTOR) setLoginDirector(loginID);
         else if (Login_MEMBER_Grade==MEMBER_GRADE_TEACHER) setLoginTeacher(loginID);
@@ -95,7 +95,7 @@ public class  G {
     public static void setLoginID(MParent loginID) {
         setLoginParent(loginID);
         isLogined=true;
-        setLogin_MEMBER_Grade(loginID.getMemberGrade());
+        //setLogin_MEMBER_Grade(loginID.getMemberGrade());
 
     }
 

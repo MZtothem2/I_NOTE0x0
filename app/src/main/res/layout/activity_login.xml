@@ -60,6 +60,7 @@
                 android:clickable="true"
                 android:layout_centerInParent="true"
                 android:onClick="clickSignup"
+                android:background="?attr/selectableItemBackground"
                 />
         </RelativeLayout>
 
@@ -89,7 +90,9 @@
                 android:text="원장 체험"
                 android:gravity="center"
                 android:clickable="true"
-                android:onClick="clickTrial"/>
+                android:onClick="clickTrial"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/btn_trial_teacher"
@@ -99,7 +102,9 @@
                 android:text="교사 체험"
                 android:gravity="center"
                 android:clickable="true"
-                android:onClick="clickTrial"/>
+                android:onClick="clickTrial"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/btn_trial_parent"
@@ -109,7 +114,9 @@
                 android:text="학부모 체험"
                 android:gravity="center"
                 android:clickable="true"
-                android:onClick="clickTrial"/>
+                android:onClick="clickTrial"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"/>
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

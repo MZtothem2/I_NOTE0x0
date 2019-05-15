@@ -12,6 +12,7 @@
     <color name="option_back">#DDDDDD</color>
     <color name="option_line">#BBBBBB</color>
 
+    <color name="white">#FFFFFF</color>
 
     <color name="note_name">#666666</color>
 </resources>

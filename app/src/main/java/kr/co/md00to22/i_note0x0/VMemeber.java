@@ -1,6 +1,6 @@
 package kr.co.md00to22.i_note0x0;
 
-public class Member {
+public class VMemeber {
     private String id;
     private String password;
     private int level;
@@ -11,10 +11,10 @@ public class Member {
     private String device_code;
     private int in_organization;
 
-    public Member() {
+    public VMemeber() {
     }
 
-    public Member(String id, String password, int level, int approved, String name, String phone) {
+    public VMemeber(String id, String password, int level, int approved, String name, String phone) {
         this.id = id;
         this.password = password;
         this.level = level;
@@ -23,7 +23,7 @@ public class Member {
         this.phone = phone;
     }
 
-    public Member(String id, String password, int level, int approved, String name, String phone, String device_code, int in_organization) {
+    public VMemeber(String id, String password, int level, int approved, String name, String phone, String device_code, int in_organization) {
         this.id = id;
         this.password = password;
         this.level = level;

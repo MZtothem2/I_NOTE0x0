@@ -62,8 +62,9 @@ public class NoteListTFragment extends Fragment {
 
         setClassSpinner();
 
+//        Toast.makeText(context, G.getAllNotes().size()+"", Toast.LENGTH_SHORT).show();
         selectedNotes=G.getAllNotes();
-        recyclerAdapter=new NoteTAdapter( selectedNotes, getActivity(), getFragmentManager());
+        recyclerAdapter=new NoteTAdapter( selectedNotes, context, getFragmentManager());
         recyclerViewTList.setAdapter(recyclerAdapter);
 
         return view;
