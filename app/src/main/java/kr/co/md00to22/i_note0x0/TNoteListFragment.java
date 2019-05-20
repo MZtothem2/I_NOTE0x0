@@ -81,7 +81,7 @@ public class TNoteListFragment extends Fragment {
                     setChildrenSpinner();
 
                     arrangeClsNotes(Global.getArrClsCode().get(position));
-                    recyclerAdapter.notifyDataSetChanged();
+                    //recyclerAdapter.notifyDataSetChanged();
                     drawRecyclerview();
                 }else if(position==0){
                     notes_toshow=Global.getNotesToShow();
@@ -109,7 +109,9 @@ public class TNoteListFragment extends Fragment {
                     arrangeKidsNotes(Global.getArrKIdsCode().get(position));
                     notes_toshow.clear();
                     arrangeKidsNotes(Global.getArrKIdsCode().get(position));
-                    recyclerAdapter.notifyDataSetChanged();
+                    //recyclerAdapter.notifyDataSetChanged();
+                    drawRecyclerview();
+
                 }else if (position==0){
 
                 }

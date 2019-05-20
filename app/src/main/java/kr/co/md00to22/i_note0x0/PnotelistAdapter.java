@@ -102,14 +102,6 @@ public class PnotelistAdapter extends RecyclerView.Adapter {
                     transaction.add(R.id.fragment_container, noteReadFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-
-//                    String a="", b="";
-//                    if(notes.get(getLayoutPosition()).getPnote()!=null) a = notes.get(getLayoutPosition()).getPnote().getContnet();
-//                    if(notes.get(getLayoutPosition()).getTnote()!=null) a = notes.get(getLayoutPosition()).getTnote().getContnet();
-//
-//                    Log.i("알림장 클릭한거", a +" / "+ b);
-
-
                 }
             });
 

@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TeachersActivity extends AppCompatActivity {
-    FragmentTransaction fragtransaction;
+    FragmentManager fragmentManager;
     final int COMPLETE_DOWNLOAD_NOTE=8;
     final int COMPLETE_ARRANGE_NOTE=9;
 
@@ -83,7 +83,7 @@ public class TeachersActivity extends AppCompatActivity {
 
 
     void openFragment(){
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         TNoteListFragment tNoteListFragment=new TNoteListFragment();
@@ -178,6 +178,22 @@ public class TeachersActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(stringRequest);
     }//requestTnote
 
+    @Override
+    public void onBackPressed() {
+        if (fragmentManager.getBackStackEntryCount()==1){
+            new AlertDialog.Builder(this).setMessage("I.NOTE를 종료하시겠습니까?").setPositiveButton("종료하기", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).show();
+        }else super.onBackPressed();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
