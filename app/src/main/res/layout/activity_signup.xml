@@ -35,7 +35,7 @@
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="10dp"
         ></RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,7 +88,7 @@
         >
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:layout_height="wrap_content"
             android:text="메일"
             android:textColor="#333333"
@@ -104,6 +104,20 @@
             android:textSize="16sp"
             android:inputType="textEmailAddress"
             />
+        <TextView
+            android:id="@+id/tv_idcheck"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:text="중복확인"
+            android:padding="8dp"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/rounded_corner_gr"
+            android:clickable="true"
+            android:textSize="10sp"
+            android:gravity="center"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -115,7 +129,7 @@
         >
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:layout_height="wrap_content"
             android:text="이름"
             android:textColor="#333333"
@@ -142,7 +156,7 @@
         >
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:layout_height="wrap_content"
             android:text="비밀번호"
             android:textColor="#333333"
@@ -169,7 +183,7 @@
         >
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:layout_height="wrap_content"
             android:text="비밀번호 확인"
             android:textColor="#333333"
@@ -185,6 +199,17 @@
             android:textSize="16sp"
             android:inputType="textPassword"
             />
+        <TextView
+            android:id="@+id/tv_pwcheck"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textSize="10sp"
+            android:gravity="center"
+            android:layout_marginRight="8dp"
+
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -196,7 +221,34 @@
         >
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
+            android:layout_height="wrap_content"
+            android:text="자녀이름"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:gravity="right"
+            android:layout_marginRight="8dp"
+            />
+        <EditText
+            android:id="@+id/et_organization_kidname"
+            android:layout_width="0dp"
+            android:layout_weight="4.5"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:inputType="textEmailAddress"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="9"
+        android:gravity="bottom"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2.5"
             android:layout_height="wrap_content"
             android:text="기관"
             android:textColor="#333333"
@@ -213,8 +265,6 @@
             android:inputType="textEmailAddress"
             />
     </LinearLayout>
-
-
 
     <RelativeLayout
         android:layout_width="match_parent"

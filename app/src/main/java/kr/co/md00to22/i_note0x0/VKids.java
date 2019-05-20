@@ -17,12 +17,13 @@ public class VKids {
     public VKids() {
     }
 
-    public VKids(int kid_code, String name, int status, int in_organization, String in_orgName) {
+
+
+    public VKids(int kid_code, String name, int in_class) {
         this.kid_code = kid_code;
         this.name = name;
-        this.status = status;
-        this.in_organization = in_organization;
-        this.in_orgName=in_orgName;
+        this.in_class = in_class;
+
     }
 
     public VKids(int kid_code, String name, int status, int age, int in_organization,String in_orgName, int in_class,String photoUrl ,ArrayList<String> adults ) {

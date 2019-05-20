@@ -1,30 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="88dp"
+    android:layout_height="72dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp"
     android:layout_margin="4dp"
     android:background="@drawable/border_view"
     >
 
+    <TextView
+        android:id="@+id/pnotelist_if_tnote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2019년 2월 21일 목요일 알림장"
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/text_deep"
+        android:layout_marginLeft="32dp"
+        />
+
     <RelativeLayout
+        android:id="@+id/pnotelist_p_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:padding="8dp"
+        >
 
         <TextView
-            android:id="@+id/note_item_toorgani_content"
+            android:id="@+id/plist_pcontents"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="40dp"
+            android:maxLines="2"
             android:text="울퉁불퉁 멋진 몸매에 빨간 옷을 입고 새콤달콤 향내풍기는 멋쟁이 토마토 나는야 주스 될거야 (쭈욱) 나는야 케첩 될거야 (찌익) 나는야 춤을 출거야!(헤이!) 뽐내는 토마토(토마토) "
             android:textSize="14sp"
             android:paddingHorizontal="8dp"
-            android:layout_alignParentTop="true"
             />
 
         <TextView
-            android:id="@+id/note_item_toorgani_date"
+            android:id="@+id/plist_ptime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2019년 2월 21일 목요일"

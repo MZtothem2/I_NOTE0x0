@@ -1,14 +1,17 @@
 package kr.co.md00to22.i_note0x0;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class VNotes {
+public class VNotes implements Serializable {
     private int note_num;
     private int write_level;
     private String write_mem;
     private String write_date;
     private int kid_code;
     private int class_code;
+    private int org_code;
+    private boolean visibility=true;
 
     private String contnet;
     private int[] check;
@@ -25,9 +28,10 @@ public class VNotes {
         this.write_date = write_date;
         this.kid_code = kid_code;
         this.class_code = class_code;
+
     }
 
-    public VNotes(int note_num, int write_level, String write_mem, String write_date, int kid_code, int class_code, String contnet, int[] check, String checkT, ArrayList<String> photo) {
+    public VNotes(int note_num, int write_level, String write_mem, String write_date, int kid_code, int class_code, int org_code, String contnet, int[] check, String checkT, ArrayList<String> photo) {
         this.note_num = note_num;
         this.write_level = write_level;
         this.write_mem = write_mem;
@@ -38,8 +42,24 @@ public class VNotes {
         this.check = check;
         this.checkT = checkT;
         this.photo_urls = photo;
+        this.org_code=org_code;
     }
 
+    public boolean getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(boolean visibility) {
+        this.visibility = visibility;
+    }
+
+    public int getOrg_code() {
+        return org_code;
+    }
+
+    public void setOrg_code(int org_code) {
+        this.org_code = org_code;
+    }
 
     public int getNote_num() {
         return note_num;

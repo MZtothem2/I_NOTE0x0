@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#FFFFFF"
     >
 <LinearLayout
     android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#FFFFFF"
+        android:layout_marginBottom="16dp"
         >
         <!--1-1 제목-->
         <TextView
@@ -87,36 +87,36 @@
                 android:textSize="16sp"
                 android:layout_marginRight="8dp"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="하원 :"
-                android:textSize="16sp"
-                android:layout_marginRight="2dp"
-                />
-            <TextView
-                android:id="@+id/tv_pnote_return_adult"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:layout_marginRight="2dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="16sp"
-                />
-            <TextView
-                android:id="@+id/tv_pnote_return_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:layout_marginRight="4dp"
-                />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:text="하원 :"-->
+                <!--android:textSize="16sp"-->
+                <!--android:layout_marginRight="2dp"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_pnote_return_adult"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="16sp"-->
+                <!--android:layout_marginRight="2dp"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="16sp"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_pnote_return_time"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="16sp"-->
+                <!--android:layout_marginRight="4dp"-->
+                <!--/>-->
 
         </LinearLayout>
         <!--구분선-->
@@ -156,7 +156,7 @@
                 android:id="@+id/tv_writetime_p"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="[2019년 3월 3일 08:30 작성]"
+                android:text="[작성시간]"
                 android:textSize="10sp"
                 android:textStyle="italic"
                 android:gravity="right"
@@ -175,7 +175,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginVertical="16dp"
         android:background="#FFFFFF"
         >
         <!--2-1 제목-->
@@ -246,22 +245,22 @@
                 android:textSize="16sp"
                 android:layout_marginRight="16dp"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="낮잠 :"
-                android:textSize="16sp"
-                android:layout_marginRight="2dp"
-                />
-            <TextView
-                android:id="@+id/tv_tnote_check4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:layout_marginRight="4dp"
-                />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:text="낮잠 :"-->
+                <!--android:textSize="16sp"-->
+                <!--android:layout_marginRight="2dp"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_tnote_check4"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="16sp"-->
+                <!--android:layout_marginRight="4dp"-->
+                <!--/>-->
 
         </LinearLayout>
         <!--구분선-->

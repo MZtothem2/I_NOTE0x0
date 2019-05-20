@@ -92,7 +92,8 @@
                 android:clickable="true"
                 android:onClick="clickTrial"
                 android:paddingVertical="16dp"
-                android:background="?attr/selectableItemBackground"/>
+                android:background="?attr/selectableItemBackground"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/btn_trial_teacher"

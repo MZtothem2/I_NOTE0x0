@@ -19,7 +19,7 @@ public class PKidslistFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pkidslist, container, false);
 
         RecyclerView recyclerView=view.findViewById(R.id.kidsrecycler);
-        KidsListRAdapter recyclerAdapter=new KidsListRAdapter(Global.getKids(), getContext());
+        KidsListRAdapter recyclerAdapter=new KidsListRAdapter(getContext(),Global.getKids(), getFragmentManager());
 
         recyclerView.setAdapter(recyclerAdapter);
 
@@ -27,7 +27,14 @@ public class PKidslistFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
+        //recyclerView.addOnItemTouchListener();
 
         return view;
     }
+
+
+
+
+
+
 }

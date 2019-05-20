@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,13 +37,30 @@ public class LoginActivity extends AppCompatActivity {
     String insertId, insertPw;
 
     String loginUrl;
-    boolean isRun_login=true;
 
+    private final int P_COMPLETE_LOGIN=30;
+    private final int P_COMPLETE_KID_DATA=31;
+
+    private final int T_COMPLETE_LOGIN=20;
+    private final int T_COMPLETE_ORG_DATA=21;
+    private final int T_COMPLETE_CLS_DATA=22;
+    private final int T_COMPLETE_KIDS_DATA=23;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //초기화
+        Global.setLoginUser(null);
+        Global.setLoginOrg(null);
+        Global.setCls(null);
+        Global.setOrgKids(null);
+        Global.setNotes_got(null);
+        Global.setNotesToShow(null);
+        Global.setKids(null);
+        Global.setSelectedKid(null);
+
+
         setContentView(R.layout.activity_login);
 
         etId=findViewById(R.id.et_id_login);
@@ -53,8 +73,6 @@ public class LoginActivity extends AppCompatActivity {
 
         insertId=etId.getText().toString();
         insertPw=etPw.getText().toString();
-
-        isRun_login=true;
 
         //입력조건
         if (!insertId.contains("@") || !insertId.contains(".") || insertId.equals("") || insertId==null || insertPw.equals("") || insertPw==null){
@@ -73,12 +91,18 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     public void clickSignup(View view) {
         startActivity(new Intent(this, SignupActivity.class));
     }//clickSignup
 
     public void clickTrial(View view) {
+        if(Global.getLoginUser()!=null) Global.setLoginUser(null);
+        if(Global.getLoginOrg()!=null) Global.setLoginOrg(null);
+        if(Global.getKids()!=null) Global.setKids(null);
+        if(Global.getSelectedKid()!=null) Global.setSelectedKid(null);
+        if(Global.getCls()!=null) Global.setCls(null);
+        if(Global.getOrgKids()!=null) Global.setOrgKids(null);
+
         switch (view.getId()){
             case R.id.btn_trial_director:
                 insertId="director@aaa.com";
@@ -99,26 +123,49 @@ public class LoginActivity extends AppCompatActivity {
 
     }//clickTrial
 
-    public void goNextActivity(){
-        Intent intent;
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case P_COMPLETE_LOGIN:
+                    requestKIDdata(Global.getLoginUser().getId());
+                    break;
 
-        if(Global.getLoginUser().getLevel()==Global.MEMBER_GRADE_PARENT) intent=new Intent(LoginActivity.this, ParentsActivity.class);
-        else intent=new Intent(LoginActivity.this, TeachersActivity.class);
+                case P_COMPLETE_KID_DATA:
+                    startActivity( new Intent(LoginActivity.this, ParentsActivity.class) );
+                    break;
 
-        //intent=new Intent(LoginActivity.this, StartActivity.class);
-        startActivity(intent);
-    }
+                case T_COMPLETE_LOGIN:
+                    requestOrg(Global.getLoginUser().getIn_organization());
+                    break;
 
-    private void getClassDatas(final int organizationCode){
+                case T_COMPLETE_ORG_DATA:
+                    requestClsDatas(Global.getLoginOrg().getOrg_code());
+                    break;
+
+                case T_COMPLETE_CLS_DATA:
+                    requestOrgKids(Global.getLoginOrg().getOrg_code());
+                    break;
+
+                case T_COMPLETE_KIDS_DATA:
+                    startActivity( new Intent(LoginActivity.this, TeachersActivity.class) );
+                    break;
+            }
+        }
+    };
+
+
+
+    private void requestClsDatas(final int organizationCode){
         String getclsurl="http://mdmn1.dothome.co.kr/iinote/login_getclass.php";
         StringRequest clsRequest=new StringRequest(Request.Method.POST, getclsurl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try{
-                    Log.i("제이슨데이터", response);
-
                     JSONArray jsonArray=new JSONArray(response);
-                    HashMap<String, VClasses> clsss=new HashMap<>();
+                    ArrayList<VClasses> clsss=new ArrayList<>();
+
+                    StringBuffer testBuffer=new StringBuffer();
                     for(int i=0; i<jsonArray.length(); i++){
                         JSONObject jsonObject=jsonArray.getJSONObject(i);
                         int classcode=Integer.parseInt(jsonObject.getString("class_code"));
@@ -127,15 +174,14 @@ public class LoginActivity extends AppCompatActivity {
                         int classorg=Integer.parseInt(jsonObject.getString("in_org"));
 
                         VClasses cls=new VClasses(classcode,classname,classage,classorg);
-                        if(clsss!=null) clsss.put(classname,cls);
+                        if(clsss!=null) clsss.add(cls);
+
+                        testBuffer.append("["+classcode+","+classname+"] / ");
                     }
 
                     Global.setCls(clsss);
-
-                    isRun_login=false;
-                    goNextActivity();
-
-
+                    handler.sendEmptyMessage(T_COMPLETE_CLS_DATA);
+                    Log.i("클래스정보", testBuffer.toString());
             }catch (Exception e){
 
             }
@@ -157,26 +203,60 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(clsRequest);
     }
 
-    private void orgRequest(final int organizationCode){
+    private void requestOrgKids(final int org_code){
+        String url="http://mdmn1.dothome.co.kr/iinote/find_org_kids.php";
+        StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONArray jsonArray=new JSONArray(response);
+
+                    ArrayList<VKids> arr=new ArrayList<>();
+                    for (int i=0; i<jsonArray.length(); i++){
+                        JSONObject jsonObject=jsonArray.getJSONObject(i);
+
+                        String name=jsonObject.getString("kid_name");
+                        int code=Integer.parseInt(jsonObject.getString("kid_code"));
+                        int cls_code=Integer.parseInt(jsonObject.getString("in_class"));
+
+                        VKids k=new VKids(code,name,cls_code);
+                        arr.add(k);
+                    }
+
+                    Global.setOrgKids(arr);
+                    handler.sendEmptyMessage(T_COMPLETE_KIDS_DATA);
+                }catch (Exception e){
+                    Log.i("orgkid에러", e.getMessage() +"/"+ response);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params=new HashMap<>();
+                params.put("in_org", org_code+"");
+                return params;
+            }
+        };
+
+        Volley.newRequestQueue(this).add(request);
+    }
+
+    private void requestOrg(final int organizationCode){
         String orgRequestUrl="http://mdmn1.dothome.co.kr/iinote/login_getorg.php";
 
         StringRequest orgRequest=new StringRequest(Request.Method.POST, orgRequestUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try{
-                    Toast.makeText(LoginActivity.this, "기관정보가져오기", Toast.LENGTH_SHORT).show();
                     JSONObject jsonObject=new JSONObject(response);
 
                     String orgcode_s=jsonObject.getString("org_code");
-                    if (orgcode_s==null || orgcode_s.equals("")) {
-                        new AlertDialog.Builder(LoginActivity.this).setMessage("등록된 기관정보가 없습니다.").setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        return;
-                                    }
-                                }
-                        ).show();
-                    }
+
 
                     int orgcode=Integer.parseInt(orgcode_s);
                     //사용자정보의 기관코드와 비교
@@ -190,24 +270,14 @@ public class LoginActivity extends AppCompatActivity {
                     VOrganization loginOrg=new VOrganization(orgcode, name, address, phone);
                     Global.setLoginOrg(loginOrg);
 
-
-                    if(Global.getLoginUser().getLevel()==Global.MEMBER_GRADE_PARENT) {
-                        isRun_login = false;
-                        goNextActivity();
-                    }else{
-                        getClassDatas(organizationCode);
-                    }
-
-                }catch (Exception e){
-
-                }
+                    handler.sendEmptyMessage(T_COMPLETE_ORG_DATA);
+                }catch (Exception e){ }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(LoginActivity.this, "기관 정보 로드 오류", Toast.LENGTH_SHORT).show();
-            }{
-
+                Log.i("Login-org", error.getMessage());
             }
         }){
             @Override
@@ -223,7 +293,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void getKidRequest(final String userid){
+    private void requestKIDdata(final String userid){
         String findKidUrl="http://mdmn1.dothome.co.kr/iinote/find_kids.php";
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, findKidUrl, new Response.Listener<String>() {
@@ -257,16 +327,9 @@ public class LoginActivity extends AppCompatActivity {
                         VKids vKids=new VKids(kidCode,name, status,age,in_org, in_orgName,in_class,photourl,adults);
                         kids.add(vKids);
                     }
-                    new AlertDialog.Builder(LoginActivity.this).setMessage(kids.toString()).setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).show();
 
                     Global.setKids(kids);
-                    isRun_login=false;
-                    goNextActivity();
+                    handler.sendEmptyMessage(P_COMPLETE_KID_DATA);
                 }catch (Exception e) {
                 }
             }
@@ -288,9 +351,8 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     private void loginRequest(){
-        if (!isRun_login) return;
+        if (Global.getLoginUser()!=null) return;
         loginUrl="http://mdmn1.dothome.co.kr/iinote/login.php";
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, loginUrl, new Response.Listener<String>() {
@@ -311,7 +373,7 @@ public class LoginActivity extends AppCompatActivity {
                     VMemeber loginMemeber=new VMemeber(id, pw, level, approved, name, phone, device_code, in_org);
 
 
-                    if (approved!=G.IS_APPROVED){
+                    if (approved!=Global.IS_APPROVED){
                         //미승인 시 로그아웃
                         new AlertDialog.Builder(LoginActivity.this).setMessage("관리자의 승인이 필요합니다.").setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
@@ -324,11 +386,8 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "로그인까지 함", Toast.LENGTH_SHORT).show();
 
                         //등급에 따른 정보 받기
-                        if(Global.getLoginUser().getLevel()==Global.MEMBER_GRADE_PARENT) {
-                            getKidRequest(Global.getLoginUser().getId());
-                        }else{
-                            orgRequest(Global.getLoginUser().getIn_organization());
-                        }
+                        if(Global.getLoginUser().getLevel()==Global.MEMBER_GRADE_PARENT) handler.sendEmptyMessage(P_COMPLETE_LOGIN);
+                        else handler.sendEmptyMessage(T_COMPLETE_LOGIN);
                     }
 
                 } catch (JSONException e) {
@@ -358,4 +417,9 @@ public class LoginActivity extends AppCompatActivity {
     }//loginRequest
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handler=null;
+    }
 }

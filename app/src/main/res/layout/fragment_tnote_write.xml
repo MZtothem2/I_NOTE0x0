@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="15"
-    >
+    tools:context=".TNoteWriteFragment">
     <!--1줄 spinner-->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="45dp"
         android:gravity="center"
-        android:padding="2dp"
+        android:orientation="horizontal"
         >
         <Spinner
             android:id="@+id/spinner_class_twrite"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:spinnerMode="dropdown"
             android:layout_height="match_parent"></Spinner>
         <Spinner
             android:id="@+id/spinner_kids_twrite"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:spinnerMode="dropdown"
             android:layout_toRightOf="@id/spinner_class_twrite"></Spinner>
-    </RelativeLayout>
+    </LinearLayout>
 
 
 
@@ -81,7 +83,7 @@
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 />
-                />
+            />
         </RadioGroup>
     </LinearLayout>
 
@@ -198,85 +200,85 @@
         </RadioGroup>
     </LinearLayout>
 
-    <!--4줄 : 낮잠-->
+    <!--&lt;!&ndash;4줄 : 낮잠&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:weightSum="4"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:background="@color/option_back"-->
+    <!--&gt;-->
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:text="낮잠"-->
+    <!--android:textSize="16sp"-->
+    <!--/>-->
+
+
+    <!--&lt;!&ndash;낮잠시간&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_weight="3"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:padding="4dp"-->
+    <!--&gt;-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/btn_nap_start"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:text="시간선택"-->
+    <!--android:textColor="#000000"-->
+    <!--android:background="@drawable/rounded_corner"-->
+    <!--/>-->
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_weight="0.2"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:text=" ~ "-->
+    <!--/>-->
+    <!--<TextView-->
+    <!--android:id="@+id/btn_nap_end"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:text="시간선택"-->
+    <!--android:textColor="#000000"-->
+    <!--android:background="@drawable/rounded_corner"-->
+    <!--/>-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:weightSum="4"
-        android:orientation="horizontal"
-        android:background="@color/option_back"
-        >
-        <TextView
-            android:layout_width="0dp"
+        android:layout_weight="12"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="낮잠"
-            android:textSize="16sp"
-            />
-
-
-        <!--낮잠시간-->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent"
-            android:padding="4dp"
             >
 
-            <TextView
-                android:id="@+id/btn_nap_start"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <EditText
+                android:id="@+id/et_twrite"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="시간선택"
-                android:textColor="#000000"
-                android:background="@drawable/rounded_corner"
-                />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.2"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text=" ~ "
-                />
-            <TextView
-                android:id="@+id/btn_nap_end"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="시간선택"
-                android:textColor="#000000"
-                android:background="@drawable/rounded_corner"
-                />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"
-        android:orientation="vertical">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-
-        <EditText
-            android:id="@+id/et_twrite"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:focusedByDefault="false"
-            android:background="@null"
-            android:hint="오늘의 알림장 내용을 적어주세요."/>
-    </ScrollView>
+                android:padding="8dp"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:focusedByDefault="false"
+                android:background="@null"
+                android:hint="오늘의 알림장 내용을 적어주세요."/>
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/layout_attatchlist"
@@ -299,19 +301,17 @@
         android:textSize="16sp"
         android:background="@color/option_back"
         android:clickable="true"
-        android:visibility="invisible"
+        android:visibility="gone"
         />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="10dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
         android:background="@color/option_line">
         <TextView
             android:id="@+id/btn_delete_t"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="삭제"
             android:textSize="16sp"
@@ -323,16 +323,15 @@
             />
         <TextView
             android:id="@+id/btn_submit_t"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="등록"
             android:textSize="16sp"
             android:gravity="center"
-            android:background="@color/text_menu"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
