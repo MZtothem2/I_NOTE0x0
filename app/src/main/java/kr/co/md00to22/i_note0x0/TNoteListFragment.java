@@ -1,7 +1,5 @@
 package kr.co.md00to22.i_note0x0;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,26 +16,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.error.AuthFailureError;
-import com.android.volley.error.VolleyError;
-import com.android.volley.request.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TNoteListFragment extends Fragment {
 
     RecyclerView recyclerView;
     Spinner spinnerClass, spinnerKids;
-    ArrayList<NoteOne> notes_toshow;
+    ArrayList<VNoteOne> notes_toshow;
 
     TnotelistAdapter recyclerAdapter;
 
@@ -141,8 +126,8 @@ public class TNoteListFragment extends Fragment {
     void arrangeClsNotes(int classCode){
         StringBuffer testbuffer=new StringBuffer();
 
-        ArrayList<NoteOne> globalArr = Global.getNotesToShow();
-        ArrayList<NoteOne> arr = new ArrayList<>();
+        ArrayList<VNoteOne> globalArr = Global.getNotesToShow();
+        ArrayList<VNoteOne> arr = new ArrayList<>();
 
         for (int i = globalArr.size()-1; i >= 0; i--) {
             if (globalArr.get(i).getPnote() != null) {
@@ -165,8 +150,8 @@ public class TNoteListFragment extends Fragment {
     void arrangeKidsNotes(int KidCode){
         StringBuffer testbuffer=new StringBuffer();
 
-        ArrayList<NoteOne> globalArr = Global.getNotesToShow();
-        ArrayList<NoteOne> arr = new ArrayList<>();
+        ArrayList<VNoteOne> globalArr = Global.getNotesToShow();
+        ArrayList<VNoteOne> arr = new ArrayList<>();
 
         for (int i = globalArr.size()-1; i >= 0; i--) {
             if (globalArr.get(i).getTnote() != null) {

@@ -1,14 +1,12 @@
 package kr.co.md00to22.i_note0x0;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 public class Global {
 
@@ -47,7 +45,7 @@ public class Global {
 //정보
     private static VMemeber loginUser;
     private static ArrayList<VNotes> notes_got;
-    private static ArrayList<NoteOne> notesToShow; //noteToShow
+    private static ArrayList<VNoteOne> notesToShow; //noteToShow
 
     //교사만
     private static VOrganization loginOrg;
@@ -156,12 +154,12 @@ public class Global {
 
     public static int seperateNotes(){
         ArrayList<VNotes> notes=Global.getNotes_got();
-        ArrayList<NoteOne> rangedArr=new ArrayList<>();
+        ArrayList<VNoteOne> rangedArr=new ArrayList<>();
 
         StringBuffer testBuffer=new StringBuffer();
 
         for(int i=0; i<notes.size(); i++){
-            NoteOne a=new NoteOne();
+            VNoteOne a=new VNoteOne();
 
             String date=notes.get(i).getWrite_date().split("_")[0];
             int kid=notes.get(i).getKid_code();
@@ -244,11 +242,11 @@ public class Global {
         Global.arrKIdsCode = arrKIdsCode;
     }
 
-    public static ArrayList<NoteOne> getNotesToShow() {
+    public static ArrayList<VNoteOne> getNotesToShow() {
         return notesToShow;
     }
 
-    public static void setNotesToShow(ArrayList<NoteOne> notesToShow) {
+    public static void setNotesToShow(ArrayList<VNoteOne> notesToShow) {
         Global.notesToShow = notesToShow;
     }
 

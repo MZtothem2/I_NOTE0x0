@@ -4,25 +4,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 
 
 public class NoteReadFragment extends Fragment {
 
-    NoteOne note;
+    VNoteOne note;
 
     LinearLayout layoutP;
     TextView[] tvPcheck=new TextView[5];
@@ -42,7 +37,7 @@ public class NoteReadFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         Bundle bundle=getArguments();
-        if (bundle!=null) note=(NoteOne)bundle.getSerializable("select_note");
+        if (bundle!=null) note=(VNoteOne)bundle.getSerializable("select_note");
         else{
             Toast.makeText(getContext(), "알림장 읽어오기 오류", Toast.LENGTH_SHORT).show();
             return new View(getContext());

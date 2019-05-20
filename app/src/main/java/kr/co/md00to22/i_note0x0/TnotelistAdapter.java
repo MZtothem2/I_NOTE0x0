@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,11 +18,11 @@ import java.util.ArrayList;
 public class TnotelistAdapter extends RecyclerView.Adapter {
 
     Context context;
-    ArrayList<NoteOne> notes;
+    ArrayList<VNoteOne> notes;
     FragmentManager fragmentManager;
-    NoteOne nowItem;
+    VNoteOne nowItem;
 
-    public TnotelistAdapter(Context context, ArrayList<NoteOne> notes, FragmentManager fragmentManager) {
+    public TnotelistAdapter(Context context, ArrayList<VNoteOne> notes, FragmentManager fragmentManager) {
         this.context = context;
         this.notes = notes;
         this.fragmentManager = fragmentManager;

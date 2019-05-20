@@ -2,19 +2,19 @@ package kr.co.md00to22.i_note0x0;
 
 import java.io.Serializable;
 
-public class NoteOne  implements Serializable {
+public class VNoteOne implements Serializable {
     private VNotes pnote;
     private VNotes tnote;
 
-    public NoteOne() {
+    public VNoteOne() {
     }
 
-    public NoteOne(VNotes note) {
+    public VNoteOne(VNotes note) {
         if (note.getWrite_level()==Global.MEMBER_GRADE_PARENT) pnote=note;
         else tnote=note;
     }
 
-    public NoteOne(VNotes note1, VNotes note2) {
+    public VNoteOne(VNotes note1, VNotes note2) {
         if(note1!=null){
             if (note1.getWrite_level()==Global.MEMBER_GRADE_PARENT) pnote=note1;
             else tnote=note1;

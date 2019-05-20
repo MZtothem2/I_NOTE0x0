@@ -13,13 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
-        <activity
-            android:name=".NoteActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".NoticeActivity"
-            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".SignupActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -29,7 +22,6 @@
             android:noHistory="true">
 
         </activity>
-        <activity android:name=".TestmodeActivity" />
         <activity android:name=".IntroActivity"
             android:noHistory="true">
             <intent-filter>
@@ -38,8 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InfoActivity" />
-        <activity android:name=".StartActivity" />
         <activity android:name=".ParentsActivity"
             android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".TeachersActivity"

@@ -56,21 +56,6 @@ public class ParentsActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(getApplicationContext()).setMessage("I.NOTE를 종료하시겠습니까?").setPositiveButton("종료", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        } ).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        }).show();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
     }

@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,10 +18,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
-import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -383,7 +381,6 @@ public class LoginActivity extends AppCompatActivity {
                         }).show();
                     }else{
                         Global.setLoginUser(loginMemeber);
-                        Toast.makeText(LoginActivity.this, "로그인까지 함", Toast.LENGTH_SHORT).show();
 
                         //등급에 따른 정보 받기
                         if(Global.getLoginUser().getLevel()==Global.MEMBER_GRADE_PARENT) handler.sendEmptyMessage(P_COMPLETE_LOGIN);
